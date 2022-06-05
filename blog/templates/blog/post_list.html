@@ -1,0 +1,45 @@
+{% extends 'blog\base.html' %} 
+{% load bootstrap_icons %}
+{% block content %}
+<h1>TOPRAK BLOG DJANGO</h1>
+{% if request.user.is_authenticated %}
+<h2>Welcome {{request.user}}!</h2>
+{% else %}
+<h2 id="welcome">Welcome Guest!</h2>
+{% endif %} 
+
+
+<div class="row row-cols-1 row-cols-md-2 g-4">
+{% for post in posts %}
+{% if post.post_status == 1 %}
+<div class="col">
+
+  <div class="card" style="width: 18rem;">
+    <img class="card-img-top" src="media/{{post.post_image}}" width="150rem" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">{{post.post_title}}</h5>
+      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+    
+      <a href="{% url 'detail_post' post.id %}" class="btn btn-primary">Detail</a>
+    
+      
+      
+
+    </div>
+    <div class="card-footer">
+      <small class="text-muted"><span class="badge badge-primary">{% bs_icon 'chat' %} : {{post.post_comment_count}}</span></small>
+      <small class="text-muted"><span class="badge badge-primary">{% bs_icon 'eye' %} : {{post.post_view_count}} </span></small>
+      <small class="text-muted"><span class="badge badge-primary">{% bs_icon 'heart' %} : {{post.post_like_count}} </span></small>
+      <small class="text-muted"><span class="badge badge-primary">{% bs_icon 'calendar' %} : {{post.post_last_updated}}</span></small>
+
+   
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+    
+{% endfor %}
+</div>
+
+{% endblock content %}
